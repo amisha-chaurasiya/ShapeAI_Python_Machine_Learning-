@@ -1,0 +1,209 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Amisha_Chaurasiya.ipynb",
+      "provenance": [],
+      "toc_visible": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "i4ZV6WCUDFmE"
+      },
+      "source": [
+        " \n",
+        "import numpy as np\n",
+        "import pandas as pd\n",
+        "import sklearn"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "BfLl-ZGvFD81"
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "oYzY5wMjDx9s"
+      },
+      "source": [
+        " \n",
+        "from sklearn.datasets import load_boston\n",
+        "df = load_boston()"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "mFVb-104D4mK"
+      },
+      "source": [
+        " df.keys()"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "aXe3yINOD9UR"
+      },
+      "source": [
+        " print(df.data)  #Info about the dataset"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "GUavyUmBEB-9"
+      },
+      "source": [
+        " \n",
+        "boston = pd.DataFrame(df.data, columns=df.feature_names)\n",
+        "boston.head()"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "p_u1LG6vEF6H"
+      },
+      "source": [
+        " \n",
+        "boston['MEDV']=df.target\n",
+        "boston.head()"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "xo2zdZ5xEJ1w"
+      },
+      "source": [
+        " boston.isnull()"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "8GGega2sENmy"
+      },
+      "source": [
+        " boston.isnull().sum()"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "rlv4lKL3ERoZ"
+      },
+      "source": [
+        " \n",
+        "from sklearn.model_selection import train_test_split\n",
+        "X = boston.drop('MEDV' , axis=1) \n",
+        "Y = boston['MEDV']\n",
+        "X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size= 0.15, random_state= 5 )\n",
+        "print(X_train.shape) \n",
+        "print(X_test.shape) \n",
+        "print(Y_train.shape) \n",
+        "print(Y_test.shape)"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "6Ejn2HGpEVKa"
+      },
+      "source": [
+        " \n",
+        "from sklearn.linear_model import LinearRegression\n",
+        "from sklearn.metrics import mean_squared_error"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "yMf4ALn6EZPH"
+      },
+      "source": [
+        " \n",
+        "# FITTING MODEL ON THE TRAINING DATASET\n",
+        "lin_model = LinearRegression()\n",
+        "lin_model.fit(X_train, Y_train)"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "OcDGv6m9EdQ1"
+      },
+      "source": [
+        " \n",
+        "y_train_predict = lin_model.predict(X_train) \n",
+        "rmse = (np.sqrt(mean_squared_error(Y_train, y_train_predict)))\n",
+        " \n",
+        "print(\"The model performance for training set\")\n",
+        "print('RMSE is {}'.format(rmse))\n",
+        "print(\"\\n\")\n",
+        " \n",
+        "# on training set\n",
+        "y_test_predict = lin_model.predict(X_test)\n",
+        "rmse = (np.sqrt(mean_squared_error(Y_test, y_test_predict)))\n",
+        " \n",
+        "print(\"The model performance for testing set \") \n",
+        "print('RMSE is {}'.format(rmse))"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "ruiu9x87Eg_x"
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
